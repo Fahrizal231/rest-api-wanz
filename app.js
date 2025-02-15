@@ -107,6 +107,7 @@ app.use('/api/textpro', textProRoutes);
 app.use('/api/stalker', stalkerRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/news', newsRoutes);
+app.use('/api/fullApi', fullApi);
 app.use('/api/anime', animeRoutes);
 app.use('/', statistics)
 

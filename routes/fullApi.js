@@ -2,8 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const path = require('path');
 const router = express.Router();
-const FOUNDER = "AHMMI-KUN";
-const COMPANY = "Xlicon Botz Inc";
+const FOUNDER = "wanzofc";
+const COMPANY = "wanzofc-tech";
 const formatParagraph = (text) => text ? text.replace(/\.\s+/g, ".\n\n") : "Tidak ada jawaban.";
 async function kanyutkanyut(url, method = "GET", payload = null) {
     try {

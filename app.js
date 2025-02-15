@@ -94,6 +94,7 @@ const aiRoutes = require('./routes/aiRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const animeRoutes = require('./routes/animeRoutes');
 const detailRoutes = require('./routes/detailRoutes');
+const fullApi = require('./routes/fullApi');
 const statistics = require('./routes/main')
 
 

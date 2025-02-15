@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>AHMMI APIS</title>
+  <title>AHMMI APIS - Dashboard</title>
+
+  <meta name="description" content="AHMMI APIS Dashboard - Monitor API status and usage">
+  <meta name="keywords" content="API, dashboard, monitor, status, usage">
+  <meta name="author" content="AHMMI KUN">
+  <link rel="canonical" href="https://contoh.com/dashboard">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
@@ -12,7 +16,7 @@
   <link href="https://i.ibb.co/c18tqvd/Xlicon-img-kankei.jpg" rel="apple-touch-icon">
 
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Original+Surfer&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
@@ -32,9 +36,11 @@
   <link rel="stylesheet" type="text/css" href="https://dropways.github.io/deskapp/vendors/styles/style.css" />
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css" type="text/css"
     media="all" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
   <style>
     /* Add your custom animations here */
-
     .loading-text {
       animation: shake 2s infinite;
     }
@@ -61,22 +67,59 @@
         transform: translateX(10px);
       }
     }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loading-spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
-<div class="pre-loader">
-  <div class="pre-loader-box">
-    <div class="loader-logo">
-      <img src="https://i.ibb.co/c8JJBZZ/peakpx-2.jpg" alt="Gojo Kun" />
-    </div>
-    <div class="loader-progress" id="progress_div">
-      <div class="bar" id="bar1"></div>
-    </div>
-    <div class="percent" id="percent1">0%</div>
-    <div class="loading-text">preparing endpoints...</div>
-  </div>
-</div>
 
 <body>
+
+  <!-- Pre-loader -->
+  <div class="pre-loader">
+    <div class="pre-loader-box">
+      <div class="loader-logo">
+        <img src="https://i.ibb.co/c8JJBZZ/peakpx-2.jpg" alt="Gojo Kun" />
+      </div>
+      <div class="loader-progress" id="progress_div">
+        <div class="bar" id="bar1"></div>
+      </div>
+      <div class="percent" id="percent1">0%</div>
+      <div class="loading-text">preparing endpoints...</div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center" style="width:100%">
     <div class="d-flex align-items-center justify-content-between">
       <div class="toggles">
@@ -116,7 +159,9 @@
         </li>
       </ul>
     </nav>
-  </header>
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar" style="z-index:122;">
     <ul class="sidebar-nav" id="sidebar-nav">
       <h1 class="text-2xl text-center mt-4">AHMMI <span class="text-primary">APIS</span></h1>
@@ -161,14 +206,14 @@
             <span>Detail </span>
           </a>
 
-        
+
           <a class="nav-link collapsed" href="/misc">
             <i class="bi bi-box">
             </i>
             <span>Misc </span>
           </a>
 
-         
+
 
           <a class="nav-link collapsed" href="/converter">
             <i class="bi bi-calculator">
@@ -223,21 +268,36 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="https://whatsapp.com/channel/0029VaINgEZK0IBaK1nDtE3f"  target="_blank" >
+          <a class="nav-link collapsed" href="https://whatsapp.com/channel/0029VaINgEZK0IBaK1nDtE3f"
+            target="_blank">
             <i class="bi bi-exclamation-lg"></i>
             <span>Support channel</span>
           </a>
         </li>
     </ul>
-  </aside>
+  </aside><!-- End Sidebar-->
+
+  <!-- ======= Main ======= -->
   <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
     <section class="section dashboard">
       <div class="row">
+
+        <!-- Left side columns -->
         <div class="col-lg-12">
           <div class="row">
-            <div class="content-wrapper text-center col-xxl-4 col-xl-12">
-            </div>
-            
+
+            <!-- Clock Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card">
                 <div class="card-body">
@@ -254,9 +314,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div><!-- End Clock Card -->
 
-
+            <!-- Total Visitors Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card">
                 <div class="card-body">
@@ -273,9 +333,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div><!-- End Total Visitors Card -->
 
-
+            <!-- Total Request Card -->
             <div class="col-xxl-4 col-xl-6">
               <div class="card info-card">
                 <div class="card-body">
@@ -292,9 +352,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div><!-- End Total Request Card -->
 
-
+            <!-- Today's Request Card -->
             <div class="col-xxl-4 col-xl-6">
               <div class="card info-card">
                 <div class="card-body">
@@ -311,8 +371,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-
+            </div><!-- End Today's Request Card -->
 
             <!-- User Information and IP Section -->
             <div class="col-xxl-4 col-xl-6">
@@ -331,7 +390,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div><!-- End User Information and IP Section -->
 
             <!-- System Info Section -->
             <div class="col-xxl-4 col-xl-6">
@@ -350,72 +409,159 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </div><!-- End System Info Section -->
 
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card">
-              <div class="card-body">
-                <h5 class="card-title">Battery</h5>
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon alert alert-info rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-eye"></i>
-                  </div>
-                  <div class="ps-3">
-                    <div class="weight-700 font-24 text-dark" id="batteryLevel">Loading...</div>
-                    <div class="font-14 text-secondary weight-500">Your Battery Level</div>
+            <!-- Battery Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card">
+                <div class="card-body">
+                  <h5 class="card-title">Battery</h5>
+                  <div class="d-flex align-items-center">
+                    <div
+                      class="card-icon alert alert-info rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-battery-half"></i>
+                    </div>
+                    <div class="ps-3">
+                      <div class="weight-700 font-24 text-dark" id="batteryLevel">Loading...</div>
+                      <div class="font-14 text-secondary weight-500">Your Battery Level</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div><!-- End Battery Card -->
+
+            <!-- API Status Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card">
+                <div class="card-body">
+                  <h5 class="card-title">API Status</h5>
+                  <div class="d-flex align-items-center">
+                    <div
+                      class="card-icon alert alert-success rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-server"></i>
+                    </div>
+                    <div class="ps-3">
+                      <div class="weight-700 font-24 text-dark" id="api-status">Loading...</div>
+                      <div class="font-14 text-secondary weight-500">API Service Status</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End API Status Card -->
+
+            <!-- API Response Time Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card">
+                <div class="card-body">
+                  <h5 class="card-title">API Response Time</h5>
+                  <div class="d-flex align-items-center">
+                    <div
+                      class="card-icon alert alert-warning rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-speedometer"></i>
+                    </div>
+                    <div class="ps-3">
+                      <div class="weight-700 font-24 text-dark" id="api-response-time">Loading...</div>
+                      <div class="font-14 text-secondary weight-500">Average Response Time</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End API Response Time Card -->
+            <!-- Recent Activity -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+                <div class="card-body">
+                  <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"><a href="#">#2457</a></th>
+                        <td>Brandon Jacob</td>
+                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
+                        <td>$64</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#2147</a></th>
+                        <td>Bridie Kessler</td>
+                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
+                        <td>$47</td>
+                        <td><span class="badge bg-warning">Pending</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#2049</a></th>
+                        <td>Ashleigh Langosh</td>
+                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
+                        <td>$147</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#2644</a></th>
+                        <td>Angus Grady</td>
+                        <td><a href="#" class="text-primary">Ut enim possimus</a></td>
+                        <td>$67</td>
+                        <td><span class="badge bg-danger">Rejected</span></td>
+                      </tr>
+                      <tr>
+                        <th scope="row"><a href="#">#2644</a></th>
+                        <td>Raheem Lehner</td>
+                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
+                        <td>$165</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div><!-- End Recent Activity -->
+            <!-- API Usage Chart Card -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">API Usage Chart <span>/ Monthly</span></h5>
+
+                  <!-- Line Chart -->
+                  <canvas id="apiUsageChart" style="max-height: 400px;"></canvas>
+                  <!-- End Line Chart -->
+
+                </div>
+              </div>
+            </div><!-- End API Usage Chart Card -->
+
           </div>
+        </div><!-- End Left side columns -->
 
-
-    </section>
-  </main>
-
-  <div class="col-12 col-md-8 col-lg-6 mx-auto">
-    <div class="card-box d-block mx-auto pd-20 text-secondary">
-      <div class="card-body">
-        <strong><i class="bi bi-people-fill"></i> Thanks To:</strong>
-        <div class="row">
-          <div class="col-auto">
-            <ul>
-              <li><a href="https://github.com/BK9dev" class="text-secondary">• BK9 - The person who helped share this
-                  API Site UI</a></li>
-              <li><a href="https://github.com/salmanytofficial" class="text-secondary">• H4KI-XER - The person who
-                  helped fix this API Site UI</a></li>
-            </ul>
-          </div>
-        </div>
       </div>
-    </div>
-  </div>
-  </div>
-  </div>
-  </div>
-  </section>
-  </main>
+    </section>
 
+  </main><!-- End #main -->
 
-
+  <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright
+      © Copyright
       <strong>
         <span>2022-2025 </span></br>
       </strong>
       <a href="https://github.com/salmanytofficial" class="footer-link">AHMMI KUN</a>
     </div>
-  </footer>
-
+  </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
     <i class="bi bi-arrow-up-short"></i>
   </a>
 
-
+  <!-- Vendor JS Files -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://ferdiz-afk.github.io/Nice/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="https://ferdiz-afk.github.io/Nice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -425,15 +571,17 @@
   <script src="https://ferdiz-afk.github.io/Nice/assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="https://ferdiz-afk.github.io/Nice/assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="https://ferdiz-afk.github.io/Nice/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
   <script src="https://ferdiz-afk.github.io/Nice/assets/js/main.js"></script>
 
-
+  <!-- Buy Me A Coffee Widget -->
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
     data-id="ahmmikun" data-description="Support me on Buy me a coffee!"
     data-message="You can donate me by buying me a coffee..." data-color="#5F7FFF" data-position="Right"
     data-x_margin="18" data-y_margin="18"></script>
 
-
+  <!-- DeskApp JS Files -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://dropways.github.io/deskapp/vendors/scripts/core.js"></script>
   <script src="https://dropways.github.io/deskapp/vendors/scripts/script.min.js"></script>
@@ -446,10 +594,12 @@
   <script src="https://dropways.github.io/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
   <script src="https://dropways.github.io/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 
+  <!-- Toastr JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-
+  <!-- Custom Scripts -->
   <script>
-//all funtions     
+    //all funtions
     let textElement = document.querySelector('div#browser_info');
     let greetingElement = document.querySelector('div#browser_sholat');
 
@@ -484,6 +634,32 @@
       }
     }
 
+    // Function to show notifications using Toastr
+    function showNotification(message, type = 'success') {
+      toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right"
+      };
+
+      switch (type) {
+        case 'success':
+          toastr.success(message);
+          break;
+        case 'info':
+          toastr.info(message);
+          break;
+        case 'warning':
+          toastr.warning(message);
+          break;
+        case 'error':
+          toastr.error(message);
+          break;
+        default:
+          toastr.success(message);
+      }
+    }
+
     // Fetch user info (IP, location, device)
     async function getUserInfo() {
       try {
@@ -493,6 +669,7 @@
         document.getElementById('user-location').innerText = `Location: ${data.user_info.location}`;
       } catch (error) {
         console.error("Error fetching user info:", error);
+        showNotification("Error fetching user info: " + error, "error");
       }
     }
 
@@ -509,6 +686,7 @@
         document.getElementById('cpu-usage').innerText = cpuInfo;
       } catch (error) {
         console.error("Error fetching system info:", error);
+        showNotification("Error fetching system info: " + error, "error");
       }
     }
 
@@ -524,14 +702,43 @@
 
       } catch (e) {
         console.log('Error fetching web states:', e)
+        showNotification("Error fetching web states: " + e, "error");
       }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-  getUserInfo();
-  getSystemInfo();
-  getWebStates();
-});
+    // Fetch API Status
+    async function getApiStatus() {
+      try {
+        const response = await axios.get('/api/status'); // Replace with your API status endpoint
+        const data = response.data;
+        document.getElementById('api-status').textContent = data.status; // Adjust based on your API response
+      } catch (error) {
+        console.error("Error fetching API status:", error);
+        document.getElementById('api-status').textContent = 'Offline'; // Default status
+        showNotification("Error fetching API status: " + error, "error");
+      }
+    }
+
+    // Fetch API Response Time (Example)
+    async function getApiResponseTime() {
+      try {
+        const response = await axios.get('/api/response-time'); // Replace with your API endpoint
+        const data = response.data;
+        document.getElementById('api-response-time').textContent = data.responseTime + " ms"; // Adjust based on your API response
+      } catch (error) {
+        console.error("Error fetching API response time:", error);
+        document.getElementById('api-response-time').textContent = 'N/A';
+        showNotification("Error fetching API response time: " + error, "error");
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      getUserInfo();
+      getSystemInfo();
+      getWebStates();
+      getApiStatus();
+      getApiResponseTime();
+    });
 
     function updateBatteryStatus() {
       navigator.getBattery().then(function (battery) {
@@ -593,8 +800,67 @@
       console.error(error);
     }
 
+    // ---- API Usage Chart -----
+    async function fetchApiUsageData() {
+      try {
+        const response = await axios.get('/api/usage'); // Ganti dengan URL API usage data yang sesuai
+        const usageData = response.data; // Anggap respons adalah objek dengan data bulanan
+        const labels = Object.keys(usageData); // Jan, Feb, Mar...
+        const data = Object.values(usageData); // Jumlah penggunaan untuk setiap bulan
+
+        // Destroy existing chart if it exists
+        if (window.apiUsageChartInstance) {
+          window.apiUsageChartInstance.destroy();
+        }
+
+        const ctx = document.getElementById('apiUsageChart').getContext('2d');
+        window.apiUsageChartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Jumlah Penggunaan API',
+              data: data,
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.4
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching API usage data:', error);
+        showNotification('Gagal memuat data penggunaan API. Silakan coba lagi nanti.', 'error');
+      }
+    }
+
+    // Call all data fetching functions on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      getUserInfo();
+      getSystemInfo();
+      getWebStates();
+      getApiStatus();
+      getApiResponseTime();
+      fetchApiUsageData(); // Get the API usage chart data
+    });
+
+    // Refresh data periodically (e.g., every 5 minutes)
+    setInterval(() => {
+      getUserInfo();
+      getSystemInfo();
+      getWebStates();
+      getApiStatus();
+      getApiResponseTime();
+      fetchApiUsageData();
+    }, 300000); // 300000 milliseconds = 5 minutes
   </script>
-
 </body>
-
 </html>

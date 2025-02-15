@@ -125,6 +125,7 @@ app.get("/misc", (req, res) => res.sendFile(path.join(__dirname, "./site/misc.ht
 app.get("/news", (req, res) => res.sendFile(path.join(__dirname, "./site/news.html")));
 app.get("/search", (req, res) => res.sendFile(path.join(__dirname, "./site/search.html")));
 app.get("/stalker", (req, res) => res.sendFile(path.join(__dirname, "./site/stalker.html")));
+app.get("/fullApi", (req, res) => res.sendFile(path.join(__dirname, "./site/fullApi.html")));
 app.get("/converter", (req, res) => res.sendFile(path.join(__dirname, "./site/converter.html")));
 app.get("/wallpaper", (req, res) => res.sendFile(path.join(__dirname, "./site/wallpaper.html")));
 

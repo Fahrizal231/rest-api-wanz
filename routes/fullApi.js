@@ -3,12 +3,7 @@ const axios = require('axios');
 const crypto = require('crypto');
 const path = require('path');
 const cloudscraper = require('cloudscraper');
-const { youtubePlay, youtubeMp4, youtubeMp3 } = require('../controllers/yt'); // Adjust path as needed
-const { cakLontong, bijak, quotes, fakta, ptl, motivasi } = require('../controllers/randomtext'); // Adjust path as needed
-const { geminiAi } = require('../ai'); // Adjust path as needed
-
 const router = express.Router();
-
 const FOUNDER = "AHMMI-KUN";
 const COMPANY = "Xlicon Botz Inc";
 
@@ -75,22 +70,6 @@ async function robloxStalk(userId) {
 // API Endpoints (Adapting from your provided server (5).js and api.js)
 // ----------------------------------------------------------------------
 // HTML serving routes (if you want to include these in the module)
-router.get("/kebijakan", (req, res) => {
-    res.sendFile(path.join(__dirname, "kebijakan.html"));
-});
-
-router.get("/docs", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
-router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
-});
-
-router.get('/daftar', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
-});
-
 
 router.get('/ai/deepseek-chat', async (req, res) => {
     const query = req.query.content || "halo";

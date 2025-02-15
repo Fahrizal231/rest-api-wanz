@@ -15,8 +15,8 @@ router.get('/konachan', async (req, res) => {
 
     if (!chara) {
         return res.status(400).json({
-            Founder: "AHMMI-KUN",
-            company: "Xlicon Botz Inc",
+            Founder: "wanzofc",
+            company: "wanzofc-tech",
             data: {
                 status: false,
                 message: "Query parameter 'chara' is required",
@@ -27,8 +27,8 @@ router.get('/konachan', async (req, res) => {
     try {
         const results = await konachan(chara); // Call the konachan scraper
         return res.json({
-            Founder: "AHMMI-KUN",
-            company: "Xlicon Botz Inc",
+            Founder: "wanzofc",
+            company: "wanzofc-tech",
             data: {
                 status: true,
                 data: results,
@@ -36,8 +36,8 @@ router.get('/konachan', async (req, res) => {
         });
     } catch (error) {
         return res.status(500).json({
-            Founder: "AHMMI-KUN",
-            company: "Xlicon Botz Inc",
+            Founder: "wanzofc",
+            company: "wanzofc-tech",
             data: {
                 status: false,
                 message: error.message,
@@ -53,8 +53,8 @@ router.get('/unsplash', async (req, res) => {
 
     if (!query) {
         return res.status(400).json({
-            Founder: "AHMMI-KUN",
-            company: "Xlicon Botz Inc",
+            Founder: "wanzofc",
+            company: "wanzofc-tech",
             data: {
                 status: false,
                 message: "Query parameter 'q' is required",
@@ -65,8 +65,8 @@ router.get('/unsplash', async (req, res) => {
     try {
         const results = await unsplash(query); // Call Unsplash scraper
         return res.json({
-            Founder: "AHMMI-KUN",
-            company: "Xlicon Botz Inc",
+            Founder: "wanzofc",
+            company: "wanzofc-tech",
             data: {
                 status: true,
                 data: results,
@@ -74,8 +74,8 @@ router.get('/unsplash', async (req, res) => {
         });
     } catch (error) {
         return res.status(500).json({
-            Founder: "AHMMI-KUN",
-            company: "Xlicon Botz Inc",
+            Founder: "wanzofc",
+            company: "wanzofc-tech",
             data: {
                 status: false,
                 message: error.message,

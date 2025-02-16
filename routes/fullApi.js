@@ -1259,7 +1259,7 @@ router.get('/stalk/roblox', async (req, res) => {
 });  
 
 router.get('/api/orkut/cekstatus', async (req, res) => {
-    const { apikey, merchant, keyorkut } = req.query;
+    const { merchant, keyorkut } = req.query;
 
     if (!merchant || !keyorkut) {
         return res.status(400).json({
@@ -1271,7 +1271,7 @@ router.get('/api/orkut/cekstatus', async (req, res) => {
     }
 
     try {
-        const { data } = await axios.get(`https://api.skyzopedia.us.kg/api/orkut/cekstatus?apikey=&merchant=${encodeURIComponent(merchant)}&keyorkut=${encodeURIComponent(keyorkut)}`);
+        const { data } = await axios.get(`https://api.skyzopedia.us.kg/api/orkut/cekstatus?merchant=${encodeURIComponent(merchant)}&keyorkut=${encodeURIComponent(keyorkut)}`);
         console.log('Cek Status Orkut request completed.');
 
         // Adaptasi Data (penting!):  Pastikan data dari Skyzopedia sesuai format kita.

@@ -76,7 +76,7 @@ cron.schedule(
 
 //________________________________END___________________________
 
-// App Configuration  
+// App Configuration
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/site', express.static('static'));
@@ -151,16 +151,60 @@ app.use(cors(corsOptions));
 */
 
 //======================== Error Handler ============================
+const errorFilePath = path.join(__dirname, './site/404.html'); // Path to the 404.html file (outside the 'site' folder)
+
+// Middleware to handle 404 errors (Not Found)
+app.use((req, res, next) => {
+    res.status(404).sendFile(errorFilePath);
+});
 
 app.use((err, req, res, next) => {
-    res.status(500).json({
-        Founder: "AHMMI-KUN",
-        company: "Xlicon Botz Inc",
-        data: {
-            status: false,
-            message: err.message || 'Internal Server Error',
-        },
-    });
+    console.error(err.stack); // Log the error stack for debugging
+
+    let statusCode = err.statusCode || 500; // Default to Internal Server Error if not specified
+    // Specific error code handling
+    switch (statusCode) {
+        case 400:
+        case 401:
+        case 403:
+        case 404:
+        case 405:
+        case 409:
+        case 429:
+        case 500:
+        case 502:
+        case 503:
+        case 504:
+            res.status(statusCode).sendFile(errorFilePath);  // Send 404.html for all these errors
+            return; // Important to prevent further execution
+        default:
+            break;  // Handle other status codes differently if needed
+    }
+
+    // If it's an API request or something else, send a JSON response
+    if (req.headers['content-type'] === 'application/json' || req.path.startsWith('/api')) {
+        let message = err.message || 'Internal Server Error'; // Default message
+
+        if (err instanceof mongoose.Error.ValidationError) {
+            statusCode = 400;
+            message = err.message; // Use validation error message
+        } else if (err.name === 'UnauthorizedError') {
+            statusCode = 401;
+            message = 'Unauthorized';
+        }
+
+        res.status(statusCode).json({
+            Founder: "AHMMI-KUN",
+            company: "Xlicon Botz Inc",
+            data: {
+                status: false,
+                message: message,
+            },
+        });
+    } else {
+        // If it's not an API request and not one of the handled status codes, send a generic HTML error page
+        res.status(statusCode).send(`<h1>Error ${statusCode}</h1><p>An unexpected error occurred.</p>`);
+    }
 });
 
 //======================== Start Server ============================

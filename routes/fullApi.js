@@ -1256,6 +1256,49 @@ router.get('/stalk/roblox', async (req, res) => {
         console.error("Kesalahan saat melakukan Roblox Stalk:", error);
         res.status(500).json(formatResponse(FOUNDER, false, "Gagal melakukan Roblox Stalk. Coba lagi nanti."));
     }
+});  
+
+router.get('/api/orkut/cekstatus', async (req, res) => {
+    const { merchant, keyorkut } = req.query;
+
+    if (!merchant || !keyorkut) {
+        return res.status(400).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Parameter 'merchant' dan 'keyorkut' diperlukan.",
+        });
+    }
+
+    try {
+        const { data } = await axios.get(`https://api.skyzopedia.us.kg/api/orkut/cekstatus?merchant=${encodeURIComponent(merchant)}&keyorkut=${encodeURIComponent(keyorkut)}`);
+        console.log('Cek Status Orkut request completed.');
+
+        // Adaptasi Data (penting!):  Pastikan data dari Skyzopedia sesuai format kita.
+        // Ini HANYA contoh, Sesuaikan berdasarkan struktur respons API Skyzopedia.
+        const adaptedData = {
+            status: data.status,  // Asumsikan respons Skyzopedia punya properti 'status'
+            message: data.message, // Asumsikan respons Skyzopedia punya properti 'message'
+            result: data.result   // Asumsikan respons Skyzopedia punya properti 'result'
+        };
+
+        res.json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: true,
+            message: "Cek Status Orkut",
+            data: adaptedData // Menggunakan data yang sudah diadaptasi
+        });
+    } catch (error) {
+        console.error("Cek Status Orkut error:", error);
+        res.status(500).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Gagal mengambil data api.",
+            error: error.message, // Tambahkan detail kesalahan
+        });
+    }
 });
 
 module.exports = router;

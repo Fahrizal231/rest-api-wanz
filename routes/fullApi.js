@@ -1301,4 +1301,59 @@ router.get('/api/orkut/cekstatus', async (req, res) => {
     }
 });
 
+router.get('/api/lookup-phone', async (req, res) => {
+    const { number, country_code } = req.query;
+
+    if (!number) {
+        return res.status(400).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Parameter 'number' diperlukan.",
+        });
+    }
+
+    const access_key = "d342db1c7f999d9d01d5483792c504c3"; // Simpan API key di environment variable!
+
+    let url = `http://apilayer.net/api/validate?access_key=${access_key}&number=${encodeURIComponent(number)}&format=2`;
+
+    if (country_code) {
+        url += `&country_code=${encodeURIComponent(country_code)}`;
+    }
+
+    try {
+        const { data } = await axios.get(url);
+        console.log('lookup Phone request completed.');
+
+        // Adaptasi Data (penting!): Sesuaikan dengan respons dari apilayer.net
+        const adaptedData = {
+            valid: data.valid,
+            number: data.number,
+            local_format: data.local_format,
+            international_format: data.international_format,
+            country_code: data.country_code,
+            country_name: data.country_name,
+            location: data.location,
+            carrier: data.carrier
+        };
+
+        res.json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: true,
+            message: "lookup Nomor Telepon",
+            data: adaptedData
+        });
+    } catch (error) {
+        console.error("lookup Phone error:", error);
+        res.status(500).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Gagal lookup nomor telepon.",
+            error: error.message,
+        });
+    }
+});
+
 module.exports = router;

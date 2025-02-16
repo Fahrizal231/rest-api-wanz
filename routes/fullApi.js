@@ -1355,5 +1355,94 @@ router.get('/api/lookup-phone', async (req, res) => {
         });
     }
 });
+router.get('/api/email-validation', async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Parameter 'email' diperlukan.",
+        });
+    }
+
+    const api_key = process.env.ABSTRACT_EMAIL_KEY; // Ambil dari environment variable
+
+    try {
+        const { data } = await axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=${api_key}&email=${encodeURIComponent(email)}`);
+        console.log('Email Validation request completed.');
+
+        const adaptedData = {
+            is_valid_format: data.is_valid_format,
+            is_mx_found: data.is_mx_found,
+            is_smtp_valid: data.is_smtp_valid,
+            email: data.email
+        };
+
+        res.json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: true,
+            message: "Validasi Alamat Email",
+            data: adaptedData
+        });
+    } catch (error) {
+        console.error("Email Validation error:", error);
+        res.status(500).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Gagal memvalidasi alamat email.",
+            error: error.message,
+        });
+    }
+});
+router.get('/api/ip-geolocation', async (req, res) => {
+    const { ip_address } = req.query;
+
+    if (!ip_address) {
+        return res.status(400).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Parameter 'ip_address' diperlukan.",
+        });
+    }
+
+    const api_key = process.env.ABSTRACT_IP_KEY; // Ambil dari environment variable
+
+    try {
+        const { data } = await axios.get(`https://ipgeolocation.abstractapi.com/v1/?api_key=${api_key}&ip_address=${encodeURIComponent(ip_address)}`);
+        console.log('IP Geolocation request completed.');
+
+        const adaptedData = {
+            ip_address: data.ip_address,
+            city: data.city,
+            region: data.region,
+            country: data.country,
+            postal_code: data.postal_code,
+            latitude: data.latitude,
+            longitude: data.longitude
+        };
+
+        res.json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: true,
+            message: "Informasi Geolocation IP",
+            data: adaptedData
+        });
+    } catch (error) {
+        console.error("IP Geolocation error:", error);
+        res.status(500).json({
+            founder: FOUNDER,
+            company: COMPANY,
+            status: false,
+            message: "Gagal mendapatkan informasi geolocation IP.",
+            error: error.message,
+        });
+    }
+});
 
 module.exports = router;

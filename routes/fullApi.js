@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const cloudscraper = require('cloudscraper'); 
 const path = require('path');
 const router = express.Router();
 const FOUNDER = "wanzofc";
